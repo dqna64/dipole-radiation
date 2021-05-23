@@ -6,16 +6,26 @@ class Dipole {
     this.radius = 45;
     this.angle = 0;
     this.angular_freq = 2 * PI * 0.5; // One half cycles per second
+    this.scale = 1000;
 
     this.numFieldPoints = 5;
     this.fieldPoints = [];
     for (let i = 0; i < this.numFieldPoints; i++) {
-      let newPoint = this.centre_pos + createVector() * 10;
-      let dispToPositiveCharge = p5Vector.subtract(newPoint, this.centre_pos);
-      let fieldDueToPositiveCharge =
-        (dispToPositiveCharge.normalize() * this.scale * this.charge_mag) /
-        pow(dispToPositiveCharge.length(), 2);
-      let newPointField = fieldDueToPositiveCharge + fieldDueToNegativeCharge;
+      let positiveCharge, negativeCharge;
+      [positiveCharge, negativeCharge] = this.getCharges();
+
+      // New point is random point at 10 px circumference from positive charge
+      let newPoint = p5.Vector.add(
+        positiveCharge,
+        p5.Vector.random2D().setMag(20)
+      );
+
+      let newPointField = this.calculateFieldPoint(
+        newPoint,
+        positiveCharge,
+        negativeCharge
+      );
+
       this.fieldPoints.push(new FieldPoint(newPoint, newPointField));
     }
 
@@ -25,7 +35,16 @@ class Dipole {
 
   update(dt) {
     // this.angle += this.angular_freq * dt;
-    this.fieldPoints.push(field);
+    let positiveCharge, negativeCharge;
+    [positiveCharge, negativeCharge] = this.getCharges();
+    for (let i = 0; i < this.fieldPoints.length; i++) {
+      let newPointField = this.calculateFieldPoint(
+        this.fieldPoints[i].getPos(),
+        positiveCharge,
+        negativeCharge
+      );
+      this.fieldPoints[i].update(newPointField);
+    }
   }
 
   display() {
@@ -42,5 +61,46 @@ class Dipole {
       this.centre_pos.y - this.radius * cos(this.angle),
       this.charge_display_radius
     );
+
+    for (let i = 0; i < this.fieldPoints.length; i++) {
+      this.fieldPoints[i].display();
+    }
+  }
+
+  calculateFieldPoint(fieldPointPos, positiveChargePos, negativeChargePos) {
+    // === Calculating electric field due to positive charge
+    //  Should be 10
+    let dispPositiveToNew = p5.Vector.sub(fieldPointPos, positiveChargePos);
+    let distPositiveToNew = dispPositiveToNew.mag();
+    let fieldDueToPositiveCharge = dispPositiveToNew.setMag(
+      (this.scale * this.charge_mag) / pow(distPositiveToNew, 2)
+    );
+
+    // === Calculating electric field due to negative charge
+    let dispNewToNegative = p5.Vector.sub(fieldPointPos, negativeChargePos);
+    let distNewToNegative = dispNewToNegative.mag();
+    let fieldDueToNegativeCharge = dispNewToNegative.setMag(
+      (this.scale * this.charge_mag) / pow(distNewToNegative, 2)
+    );
+
+    let newPointField = p5.Vector.add(
+      fieldDueToPositiveCharge,
+      fieldDueToNegativeCharge
+    );
+
+    return newPointField;
+  }
+
+  getCharges() {
+    let positiveCharge = createVector(
+      this.centre_pos.x,
+      this.centre_pos.y + cos(this.angle) * this.radius
+    );
+    let negativeCharge = createVector(
+      this.centre_pos.x,
+      this.centre_pos.y - cos(this.angle) * this.radius
+    );
+
+    return [positiveCharge, negativeCharge];
   }
 }
