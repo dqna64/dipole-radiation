@@ -35,4 +35,12 @@ class FieldPoint {
   getPos() {
     return this.pos.copy();
   }
+
+  limitReached() {
+    if (this.field.mag() == this.maxMag) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

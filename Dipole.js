@@ -37,13 +37,17 @@ class Dipole {
     // this.angle += this.angular_freq * dt;
     let positiveCharge, negativeCharge;
     [positiveCharge, negativeCharge] = this.getCharges();
-    for (let i = 0; i < this.fieldPoints.length; i++) {
+    for (let i = this.fieldPoints.length - 1; i >= 0; i--) {
       let newPointField = this.calculateFieldPoint(
         this.fieldPoints[i].getPos(),
         positiveCharge,
         negativeCharge
       );
       this.fieldPoints[i].update(newPointField);
+
+      if (this.fieldPoints[i].limitReached()) {
+        this.fieldPoints.pop(i);
+      }
     }
   }
 
