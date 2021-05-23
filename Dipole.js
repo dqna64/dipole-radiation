@@ -70,17 +70,17 @@ class Dipole {
   calculateFieldPoint(fieldPointPos, positiveChargePos, negativeChargePos) {
     // === Calculating electric field due to positive charge
     //  Should be 10
-    let dispPositiveToNew = p5.Vector.sub(fieldPointPos, positiveChargePos);
-    let distPositiveToNew = dispPositiveToNew.mag();
-    let fieldDueToPositiveCharge = dispPositiveToNew.setMag(
-      (this.scale * this.charge_mag) / pow(distPositiveToNew, 2)
+    let dispPositiveToPoint = p5.Vector.sub(fieldPointPos, positiveChargePos);
+    let distPositiveToPoint = dispPositiveToPoint.mag();
+    let fieldDueToPositiveCharge = dispPositiveToPoint.setMag(
+      (this.scale * this.charge_mag) / pow(distPositiveToPoint, 2)
     );
 
     // === Calculating electric field due to negative charge
-    let dispNewToNegative = p5.Vector.sub(fieldPointPos, negativeChargePos);
-    let distNewToNegative = dispNewToNegative.mag();
-    let fieldDueToNegativeCharge = dispNewToNegative.setMag(
-      (this.scale * this.charge_mag) / pow(distNewToNegative, 2)
+    let dispPointToNegative = p5.Vector.sub(negativeChargePos, fieldPointPos);
+    let distPointToNegative = dispPointToNegative.mag();
+    let fieldDueToNegativeCharge = dispPointToNegative.setMag(
+      (this.scale * this.charge_mag) / pow(distPointToNegative, 2)
     );
 
     let newPointField = p5.Vector.add(

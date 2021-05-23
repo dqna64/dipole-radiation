@@ -1,14 +1,14 @@
 class FieldPoint {
   constructor(initPos, initField) {
-    this.pos = initPos;
-    this.field = initField;
+    this.maxMag = 20.0;
+    this.pos = initPos.copy();
+    this.field = initField.copy().limit(this.maxMag);
     this.scale = 10;
-    console.log(this.pos);
   }
 
   update(newPointField) {
     this.pos.add(this.field.copy());
-    this.field = newPointField.copy();
+    this.field = newPointField.copy().limit(this.maxMag);
   }
 
   display() {
