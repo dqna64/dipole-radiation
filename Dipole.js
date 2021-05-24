@@ -33,7 +33,25 @@ class Dipole {
     this.charge_display_radius = 18;
   }
 
-  update(dt) {
+  update(dt, addNewFieldPoint) {
+    // Add new fieldPoint
+    if (addNewFieldPoint) {
+      let positiveCharge, negativeCharge;
+      [positiveCharge, negativeCharge] = this.getCharges();
+
+      // New point is random point at 10 px circumference from positive charge
+      let newPoint = p5.Vector.add(
+        positiveCharge,
+        p5.Vector.random2D().setMag(20)
+      );
+      let newFieldPoint = this.calculateFieldPoint(
+        newPoint,
+        positiveCharge,
+        negativeCharge
+      );
+      this.fieldPoints.push(new FieldPoint(newPoint, newFieldPoint));
+    }
+
     // this.angle += this.angular_freq * dt;
     let positiveCharge, negativeCharge;
     [positiveCharge, negativeCharge] = this.getCharges();

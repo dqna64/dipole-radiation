@@ -1,6 +1,6 @@
 class FieldPoint {
   constructor(initPos, initField) {
-    this.maxMag = 20.0;
+    this.maxMag = 8.0;
     this.pos = initPos.copy();
     this.field = initField.copy().limit(this.maxMag);
     this.scale = 10;
@@ -20,7 +20,7 @@ class FieldPoint {
       this.pos.x - (this.scale * this.field.x) / 2,
       this.pos.y - (this.scale * this.field.y) / 2
     );
-    line(0, 0, this.scale * this.field.x, this.scale * this.field.y);
+    // line(0, 0, this.scale * this.field.x, this.scale * this.field.y);
     pop();
 
     // Draw position point over arrow
