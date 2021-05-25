@@ -17,7 +17,7 @@ class Dipole {
       // New point is random point at 10 px circumference from positive charge
       let newPoint = p5.Vector.add(
         positiveCharge,
-        p5.Vector.random2D().setMag(20)
+        p5.Vector.random2D().mult(20 * (0.3 + Math.random()))
       );
 
       let newPointField = this.calculateFieldPoint(
@@ -42,7 +42,7 @@ class Dipole {
       // New point is random point at 10 px circumference from positive charge
       let newPoint = p5.Vector.add(
         positiveCharge,
-        p5.Vector.random2D().setMag(20)
+        p5.Vector.random2D().mult(20 * (0.3 + Math.random()))
       );
       let newFieldPoint = this.calculateFieldPoint(
         newPoint,

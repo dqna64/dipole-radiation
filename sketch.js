@@ -20,13 +20,13 @@ function setup() {
 
   t = 0;
   dt = 1 / FPS;
-  addNewFieldPointEvery = 3 * FPS; // frames
+  addNewFieldPointEvery = 0.8 * FPS; // frames
 
   background(20);
 }
 
 function draw() {
-  background(20);
+  //   background(20);
   let addNewFieldPoint;
   // Math.round on aggregate frames to fix small floating point inaccuracies
   if (Math.round(t * FPS) % addNewFieldPointEvery == 0) {
