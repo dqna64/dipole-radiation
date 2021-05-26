@@ -63,7 +63,7 @@ class Dipole {
       );
       this.fieldPoints[i].update(newPointField);
 
-      if (this.fieldPoints[i].limitReached()) {
+      if (this.fieldPoints[i].withinBounds(negativeCharge)) {
         this.fieldPoints.pop(i);
       }
     }

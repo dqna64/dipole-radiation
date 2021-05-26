@@ -6,7 +6,7 @@ class FieldPoint {
 
     this.prevPos = null;
     this.pos = initPos.copy();
-    this.field = initField.copy().limit(this.maxStep);
+    this.field = initField.copy();
     this.scale = 10;
   }
 
@@ -17,11 +17,17 @@ class FieldPoint {
       this.field.setMag(
         // Map length of update step to large lower bound so it doesn't
         // go too slowly.
-        map(this.field.mag(), 0, this.maxStep, this.minStep, this.maxStep)
+        map(
+          Math.min(this.field.mag(), this.maxStep),
+          0,
+          this.maxStep,
+          this.minStep,
+          this.maxStep
+        )
       )
     );
     // Do NOT use this.field after the above line! Its magnitude is incorrect.
-    this.field = newPointField.copy().limit(this.maxStep);
+    this.field = newPointField.copy();
   }
 
   display(canvas) {
@@ -49,8 +55,8 @@ class FieldPoint {
     return this.pos.copy();
   }
 
-  limitReached() {
-    if (this.field.mag() == this.maxMag) {
+  withinBounds(centre) {
+    if (p5.Vector.dist(centre, this.pos) <= this.maxStep) {
       return true;
     } else {
       return false;
