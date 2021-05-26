@@ -69,7 +69,7 @@ class Dipole {
     }
   }
 
-  display() {
+  display(canvasForFieldPoints) {
     noStroke();
     fill(255, 50, 50, 255);
     circle(
@@ -85,7 +85,7 @@ class Dipole {
     );
 
     for (let i = 0; i < this.fieldPoints.length; i++) {
-      this.fieldPoints[i].display();
+      this.fieldPoints[i].display(canvasForFieldPoints);
     }
   }
 
