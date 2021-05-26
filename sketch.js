@@ -26,12 +26,10 @@ function setup() {
 
   ghostCanvas = createGraphics(DIS_WIDTH, DIS_HEIGHT);
 
-  background(20);
+  background(32, 170, 245);
 }
 
 function draw() {
-  background(245, 32, 117);
-  ghostCanvas.background(20, 50);
   let addNewFieldPoint;
   // Math.round on aggregate frames to fix small floating point inaccuracies
   if (Math.round(t * FPS) % addNewFieldPointEvery == 0) {
@@ -42,7 +40,7 @@ function draw() {
   }
   dipole.update(dt, addNewFieldPoint); // Update by however many seconds pass for each frame
   dipole.display(ghostCanvas);
-  image(ghostCanvas, 0, 0);
+  //   image(ghostCanvas, 0, 0);
 
   t += dt;
 }

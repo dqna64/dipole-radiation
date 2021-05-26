@@ -1,13 +1,13 @@
 class FieldPoint {
   constructor(initPos, initField) {
+    // Rendering
+    this.minStep = 1.2;
+    this.maxStep = 12.0;
+
     this.prevPos = null;
     this.pos = initPos.copy();
-    this.field = initField.copy();
+    this.field = initField.copy().limit(this.maxStep);
     this.scale = 10;
-
-    // Rendering
-    this.minStep = 0.8;
-    this.maxStep = 1.0;
   }
 
   update(newPointField) {
@@ -21,7 +21,7 @@ class FieldPoint {
       )
     );
     // Do NOT use this.field after the above line! Its magnitude is incorrect.
-    this.field = newPointField.copy();
+    this.field = newPointField.copy().limit(this.maxStep);
   }
 
   display(canvas) {

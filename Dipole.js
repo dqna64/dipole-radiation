@@ -70,6 +70,12 @@ class Dipole {
   }
 
   display(canvasForFieldPoints) {
+    canvasForFieldPoints.background(20, 50);
+    for (let i = 0; i < this.fieldPoints.length; i++) {
+      this.fieldPoints[i].display(canvasForFieldPoints);
+    }
+    image(canvasForFieldPoints, 0, 0);
+
     noStroke();
     fill(255, 50, 50, 255);
     circle(
@@ -83,10 +89,6 @@ class Dipole {
       this.centre_pos.y - this.radius * cos(this.angle),
       this.charge_display_radius
     );
-
-    for (let i = 0; i < this.fieldPoints.length; i++) {
-      this.fieldPoints[i].display(canvasForFieldPoints);
-    }
   }
 
   calculateFieldPoint(fieldPointPos, positiveChargePos, negativeChargePos) {
