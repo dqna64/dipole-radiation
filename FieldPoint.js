@@ -32,23 +32,33 @@ class FieldPoint {
 
   display(canvas) {
     // Draw arrow vector with middle of arrow at field position
+    // canvas.push();
+    // canvas.stroke(255);
+    // canvas.strokeWeight(2);
+    // canvas.translate(
+    //   this.pos.x - (this.scale * this.field.x) / 2,
+    //   this.pos.y - (this.scale * this.field.y) / 2
+    // );
+    // canvas.line(0, 0, this.scale * this.field.x, this.scale * this.field.y);
+    // canvas.pop();
+
+    // Draw line to previous point
     canvas.push();
-    canvas.stroke(255, 140, 150);
-    canvas.strokeWeight(2);
-    canvas.translate(
-      this.pos.x - (this.scale * this.field.x) / 2,
-      this.pos.y - (this.scale * this.field.y) / 2
-    );
-    // line(0, 0, this.scale * this.field.x, this.scale * this.field.y);
+    canvas.strokeWeight(3);
+    canvas.stroke(242, 48, 103);
+    // Exclude case where prevPos is null
+    if (this.prevPos) {
+      canvas.line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+    }
     canvas.pop();
 
     // Draw position point over arrow
-    canvas.push();
-    canvas.translate(this.pos.x, this.pos.y);
-    canvas.noStroke();
-    canvas.fill(255);
-    canvas.circle(0, 0, 5);
-    canvas.pop();
+    push();
+    translate(this.pos.x, this.pos.y);
+    noStroke();
+    fill(141, 242, 171);
+    circle(0, 0, 5);
+    pop();
   }
 
   getPos() {

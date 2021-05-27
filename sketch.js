@@ -25,11 +25,12 @@ function setup() {
   addNewFieldPointEvery = 0.8 * FPS; // frames
 
   ghostCanvas = createGraphics(DIS_WIDTH, DIS_HEIGHT);
-
+  ghostCanvas.clear();
   background(32, 170, 245);
 }
 
 function draw() {
+  background(20);
   let addNewFieldPoint;
   // Math.round on aggregate frames to fix small floating point inaccuracies
   if (Math.round(t * FPS) % addNewFieldPointEvery == 0) {

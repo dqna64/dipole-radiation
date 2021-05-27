@@ -70,10 +70,10 @@ class Dipole {
   }
 
   display(canvasForFieldPoints) {
-    canvasForFieldPoints.background(20, 50);
     for (let i = 0; i < this.fieldPoints.length; i++) {
       this.fieldPoints[i].display(canvasForFieldPoints);
     }
+    canvasForFieldPoints.background(230, 28);
     image(canvasForFieldPoints, 0, 0);
 
     noStroke();
